@@ -23,8 +23,7 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    //if(cc++ > 100) return;
-    //console.log(dt);
+
     this.x += this.speed*dt;
     if (this.x > 505) this.reset();
 
@@ -32,9 +31,7 @@ Enemy.prototype.update = function(dt) {
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
-    //var img = Resources.get(this.sprite);
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y-15);
-    //ctx.strokeRect(this.x, 63, img.naturalWidth, 63);
 };
 
 Enemy.prototype.reset = reset;
@@ -55,14 +52,33 @@ Player.prototype.update = function(dt) {
 };
 
 Player.prototype.render = function() {
-    //var img = Resources.get(this.sprite);
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-    //ctx.strokeRect(this.x, this.y+53, img.naturalWidth, 75);
 };
 
 Player.prototype.handleInput = function(key) {
-
-
+    switch(key) {
+        case 'up':
+            this.row--;
+            if (this.row == 0) {
+                this.col = 2;
+                this.row = 5;
+            }
+            break;
+        case 'down':
+            this.row++;
+            if (this.row == 6)
+                this.row = 5;
+            break;
+        case 'left':
+            this.col--;
+            if (this.col == -1)
+                this.col = 0;
+            break;
+        case 'right':
+            this.col++;
+            if (this.col == 5)
+                this.col = 4;
+    }
 };
 
 // Now instantiate your objects.
