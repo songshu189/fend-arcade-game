@@ -13,8 +13,6 @@ var Enemy = function() {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-    //var img = Resources.get(this.sprite);
-    //console.log(img.naturalWidth, img.baturalHeight);
 };
 
 // Update the enemy's position, required method for game
@@ -46,7 +44,7 @@ var Player = function() {
     this.sprite = 'images/char-boy.png';
 };
 
-Player.prototype.update = function(dt) {
+Player.prototype.update = function() {
     this.x = this.col*101;
     this.y = this.row*83 - 10;
 };
