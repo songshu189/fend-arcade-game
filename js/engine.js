@@ -14,20 +14,30 @@
  * a little simpler to work with.
  */
 
-var Engine = (function(global) {
+var Engine = function(global) {
     /* Predefine the variables we'll be using within this scope,
      * create the canvas element, grab the 2D context for that canvas
      * set the canvas elements height/width and add it to the DOM.
      */
     var doc = global.document,
         win = global.window,
-        canvas = doc.createElement('canvas'),
-        ctx = canvas.getContext('2d'),
+        canvas,
+        ctx,
         lastTime;
 
-    canvas.width = 505;
-    canvas.height = 606;
-    doc.body.appendChild(canvas);
+    canvas = document.querySelector('canvas');
+
+    if(!canvas) {
+        canvas= doc.createElement('canvas')
+        canvas.width = 505;
+        canvas.height = 606;
+        doc.body.appendChild(canvas);
+    }
+    else {
+        canvas.className = '';
+    }
+
+    ctx = canvas.getContext('2d');
 
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
@@ -163,17 +173,23 @@ var Engine = (function(global) {
         // noop
     }
 
+    var playerImages = ['images/char-boy.png',
+        'images/char-cat-girl.png',
+        'images/char-horn-girl.png',
+        'images/char-pink-girl.png',
+        'images/char-princess-girl.png'];
+
+    var resources = ['images/stone-block.png',
+        'images/water-block.png',
+        'images/grass-block.png',
+        'images/enemy-bug.png'];
+    resources.push(playerImages[nPlayerImage]);
+
     /* Go ahead and load all of the images we know we're going to need to
      * draw our game level. Then set init as the callback method, so that when
      * all of these images are properly loaded our game will start.
      */
-    Resources.load([
-        'images/stone-block.png',
-        'images/water-block.png',
-        'images/grass-block.png',
-        'images/enemy-bug.png',
-        'images/char-boy.png'
-    ]);
+    Resources.load(resources);
     Resources.onReady(init);
 
     /* Assign the canvas' context object to the global variable (the window
@@ -181,4 +197,4 @@ var Engine = (function(global) {
      * from within their app.js files.
      */
     global.ctx = ctx;
-})(this);
+};

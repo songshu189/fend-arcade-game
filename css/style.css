@@ -9,7 +9,6 @@ body {
 
 .title {
 	font-weight: bold;
-	position: fixed;
 }
 
 .row {
@@ -20,4 +19,16 @@ body {
 
 img {
 	cursor: pointer;
+}
+
+th {
+	text-align: right;
+}
+
+.hide-row {
+	display: none
+}
+
+.red-text {
+	color: red;
 }
