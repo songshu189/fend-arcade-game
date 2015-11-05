@@ -1,7 +1,8 @@
 var reset = function() {
     this.x = 0;
-    this.y = (Math.floor(Math.random() * 3) + 1)*83;;
-    this.speed = Math.random() * 300 + 100;
+    this.row = (Math.floor(Math.random() * 3) + 1)
+    this.y = this.row*83;;
+    this.speed = Math.random() * 200 + 50;
 };
 
 // Enemies our player must avoid
@@ -45,6 +46,18 @@ var Player = function() {
 };
 
 Player.prototype.update = function() {
+    if (hit) {
+        this.col = 2;
+        this.row = 5;
+        hit = false;
+    }
+    for(var i = 0; i<allEnemies.length; i++) {
+        var enemy = allEnemies[i];
+        if (enemy.row == this.row && (this.x + 101) > (enemy.x+18) && (enemy.x + 81) > this.x) {
+            hit = true;
+            break;
+        }
+    }
     this.x = this.col*101;
     this.y = this.row*83 - 10;
 };
@@ -60,6 +73,7 @@ Player.prototype.handleInput = function(key) {
             if (this.row == 0) {
                 this.col = 2;
                 this.row = 5;
+                hit = true;
             }
             break;
         case 'down':
@@ -82,13 +96,13 @@ Player.prototype.handleInput = function(key) {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-allEnemies = [];
+var allEnemies = [];
 allEnemies.push(new Enemy());
 allEnemies.push(new Enemy());
 allEnemies.push(new Enemy());
-player = new Player();
+var player = new Player();
 
-
+var hit = false;
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
