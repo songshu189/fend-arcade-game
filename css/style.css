@@ -1,3 +1,23 @@
 body {
     text-align: center;
 }
+
+.setting {
+	width: 505px;
+	margin: 0 auto;
+}
+
+.title {
+	font-weight: bold;
+	position: fixed;
+}
+
+.row {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+img {
+	cursor: pointer;
+}

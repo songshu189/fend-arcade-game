@@ -115,3 +115,22 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+var imgIdx = {
+    'char-boy.png':0,
+    'char-cat-girl.png':1,
+    'char-horn-girl.png':2,
+    'char-pink-girl.png':3,
+    'char-princess-girl.png':4};
+
+document.body.addEventListener("click", function(e) {
+    if(e.target && e.target.nodeName == 'IMG') {
+        var path = e.target.src;
+        var pos = path.lastIndexOf('/') + 1;
+        var file = path.substr(pos, path.length-pos);
+        document.getElementsByName('player')[imgIdx[file]].checked=true;
+        e.target.style.cursor = 'auto';
+
+        setTimeout(function(){ e.target.style.cursor = 'pointer'; }, 1000);
+    }
+});
