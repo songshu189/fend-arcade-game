@@ -107,6 +107,15 @@ var Engine = function(global) {
         player.update();
     }
 
+    var rowImages = [
+                'images/water-block.png',   // Top row is water
+            ],
+            numRows = numBricks + numGrass + 1;
+
+    var blockHeight = Math.floor(576/((numRows-1)+171/83))+1,
+            blockWidth = Math.floor(505/numCols),
+            imgHeight = blockHeight * 171/83;
+
     /* This function initially draws the "game level", it will then call
      * the renderEntities function. Remember, this function is called every
      * game tick (or loop of the game engine) because that's how games work -
@@ -114,20 +123,7 @@ var Engine = function(global) {
      * they are just drawing the entire screen over and over.
      */
     function render() {
-        /* This array holds the relative URL to the image used
-         * for that particular row of the game level.
-         */
-        var rowImages = [
-                'images/water-block.png',   // Top row is water
-                'images/stone-block.png',   // Row 1 of 3 of stone
-                'images/stone-block.png',   // Row 2 of 3 of stone
-                'images/stone-block.png',   // Row 3 of 3 of stone
-                'images/grass-block.png',   // Row 1 of 2 of grass
-                'images/grass-block.png'    // Row 2 of 2 of grass
-            ],
-            numRows = 6,
-            numCols = 5,
-            row, col;
+        var row, col;
 
         /* Loop through the number of rows and columns we've defined above
          * and, using the rowImages array, draw the correct image for that
@@ -142,7 +138,10 @@ var Engine = function(global) {
                  * so that we get the benefits of caching these images, since
                  * we're using them over and over.
                  */
-                ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
+                ctx.drawImage(Resources.get(rowImages[row]),
+                    col * blockWidth, row * blockHeight,
+                    blockWidth, imgHeight);
+
             }
         }
 
@@ -170,14 +169,18 @@ var Engine = function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
-        // noop
-    }
+         /* This array holds the relative URL to the image used
+         * for that particular row of the game level.
+         */
+        for(var i=0; i<numBricks; i++)
+            rowImages.push('images/stone-block.png');
 
-    var playerImages = ['images/char-boy.png',
-        'images/char-cat-girl.png',
-        'images/char-horn-girl.png',
-        'images/char-pink-girl.png',
-        'images/char-princess-girl.png'];
+        for(i=0; i<numGrass; i++)
+            rowImages.push('images/grass-block.png');
+        console.log(nPlayerImage)
+        player.sprite = playerImages[nPlayerImage];
+        console.log(playerImages[nPlayerImage]);
+    }
 
     var resources = ['images/stone-block.png',
         'images/water-block.png',

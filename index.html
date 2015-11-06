@@ -8,7 +8,7 @@
 <body>
 	<div id="setting-div" class="setting">
 		<div class="row title"><p>Select Player Image</p></div>
-		<div class="row">
+		<div id="select-player" class="row">
 			<div>
 				<div><img src="images/char-boy.png"></div>
 				<div><input type="radio" name="player" value="0" checked></div>
@@ -46,7 +46,11 @@
 		<br>
 		<input type="button" name="button" value="Continue">
 	</div>
+	<div id='setting-button' class="hide-row">
+        <input type="button" value="Setting" onclick="setting_button();">
+	</div>
     <script src="js/resources.js"></script>
+    <script src="js/setting.js"></script>
     <script src="js/app.js"></script>
     <script src="js/engine.js"></script>
 </body>

@@ -1,4 +1,4 @@
-var reset = function() {
+var enemy_reset = function() {
     this.x = 0;
     this.row = (Math.floor(Math.random() * 3) + 1)
     this.y = this.row*83;;
@@ -10,7 +10,7 @@ var Enemy = function() {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
-    reset.call(this);
+    enemy_reset.call(this);
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
@@ -33,7 +33,7 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y-15);
 };
 
-Enemy.prototype.reset = reset;
+Enemy.prototype.reset = enemy_reset;
 
 // Now write your own player class
 // This class requires an update(), render() and
@@ -42,7 +42,7 @@ var Player = function() {
     this.col = 2;
     this.row = 5;
 
-    this.sprite = 'images/char-boy.png';
+    this.sprite = playerImages[nPlayerImage];
 };
 
 Player.prototype.update = function() {
@@ -114,71 +114,4 @@ document.addEventListener('keyup', function(e) {
     };
 
     player.handleInput(allowedKeys[e.keyCode]);
-});
-
-var vMin = 100;
-var vMax = 500;
-var numBugs = 3;
-var numBricks = 3;
-var numGrass = 2;
-var numCols = 5;
-
-var nPlayerImage = 0;
-var playerImageIdx = {
-    'char-boy.png':0,
-    'char-cat-girl.png':1,
-    'char-horn-girl.png':2,
-    'char-pink-girl.png':3,
-    'char-princess-girl.png':4};
-
-document.body.addEventListener("click", function(e) {
-    if(e.target && e.target.nodeName == 'IMG') {
-        var path = e.target.src;
-        var pos = path.lastIndexOf('/') + 1;
-        var file = path.substr(pos, path.length-pos);
-        nPlayerImage = playerImageIdx[file];
-        document.getElementsByName('player')[nPlayerImage].checked=true;
-        e.target.style.cursor = 'auto';
-
-        setTimeout(function(){ e.target.style.cursor = 'pointer'; }, 1000);
-    }
-});
-
-document.querySelector('table').addEventListener('change', function(e){
-    var target = e.target;
-
-    if(target && target.nodeName == 'INPUT') {
-        var val = parseInt(target.value);
-
-        switch(target.name) {
-            case 'vmin':
-                if(val>vMax) {
-                    document.getElementById('min-error').className = 'red-text';
-                }else {
-                    vMin = val;
-                    document.getElementById('min-error').className = 'hide-row';
-                }
-            break;
-            case 'vmax':
-                if(val<vMin) {
-                    document.getElementById('max-error').className = 'red-text';
-                } else {
-                    vMax = val;
-                    document.getElementById('max-error').className = 'hide-row';
-                }
-            break;
-            case 'nbug':
-                numBugs = val;
-            break;
-            case 'nbricks':
-                numBricks = val;
-            break;
-            case 'ngrass':
-                numGrass = val;
-            break;
-            case 'ncols':
-                numCols = val;
-            break;
-        }
-    }
 });
