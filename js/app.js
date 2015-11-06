@@ -1,16 +1,9 @@
-var enemy_reset = function() {
-    this.x = 0;
-    this.row = (Math.floor(Math.random() * 3) + 1)
-    this.y = this.row*blockHeight;
-    this.speed = Math.random() * (vMax - vMin) + vMin;
-};
 
 // Enemies our player must avoid
 var Enemy = function() {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
-    enemy_reset.call(this);
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
@@ -35,7 +28,13 @@ Enemy.prototype.render = function() {
             imgWidth, imgHeight);
 };
 
-Enemy.prototype.reset = enemy_reset;
+Enemy.prototype.reset =  function() {
+    this.x = 0;
+    this.row = (Math.floor(Math.random() * 3) + 1)
+    this.y = this.row*blockHeight;
+    this.speed = Math.random() * (vMax - vMin) + vMin;
+};
+
 
 // Now write your own player class
 // This class requires an update(), render() and
@@ -49,12 +48,14 @@ function player_reset() {
 var hit = false;
 
 var Player = function() {
-    player_reset.call(this);
-
     this.sprite = playerImages[nPlayerImage];
 };
 
-Player.prototype.reset = player_reset;
+Player.prototype.reset = function () {
+    this.col = Math.floor(numCols/2);
+    this.row = numRows-1;
+}
+
 
 Player.prototype.update = function() {
     if (hit) {
@@ -101,9 +102,6 @@ Player.prototype.handleInput = function(key) {
             if (this.col == numCols)
                 this.col = numCols-1;
     }
-    console.log(key, this.row, this.col);
-
-    console.log(window.innerWidth, window.outerWidth);
 };
 
 // Now instantiate your objects.

@@ -185,6 +185,12 @@ var Engine = function(global) {
 
         for(i=0; i<numGrass; i++)
             rowImages.push('images/grass-block.png');
+
+        allEnemies.forEach(function(enemy) {
+            enemy.reset();
+        });
+
+
         player.reset();
         player.sprite = playerImages[nPlayerImage];
     }
