@@ -1,8 +1,8 @@
 var enemy_reset = function() {
     this.x = 0;
     this.row = (Math.floor(Math.random() * 3) + 1)
-    this.y = this.row*83;;
-    this.speed = Math.random() * 200 + 50;
+    this.y = this.row*blockHeight;
+    this.speed = Math.random() * (vMax - vMin) + vMin;
 };
 
 // Enemies our player must avoid
@@ -30,7 +30,9 @@ Enemy.prototype.update = function(dt) {
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y-15);
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y-15*hRatio,
+            //blockWidth, imgHeight)
+            imgWidth, imgHeight);
 };
 
 Enemy.prototype.reset = enemy_reset;
@@ -38,17 +40,25 @@ Enemy.prototype.reset = enemy_reset;
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
+
+function player_reset() {
+    this.col = Math.floor(numCols/2);
+    this.row = numRows-1;
+}
+
+var hit = false;
+
 var Player = function() {
-    this.col = 2;
-    this.row = 5;
+    player_reset.call(this);
 
     this.sprite = playerImages[nPlayerImage];
 };
 
+Player.prototype.reset = player_reset;
+
 Player.prototype.update = function() {
     if (hit) {
-        this.col = 2;
-        this.row = 5;
+        this.reset();
         hit = false;
     }
     for(var i = 0; i<allEnemies.length; i++) {
@@ -58,12 +68,13 @@ Player.prototype.update = function() {
             break;
         }
     }
-    this.x = this.col*101;
-    this.y = this.row*83 - 10;
+    this.x = this.col*blockWidth;
+    this.y = this.row*blockHeight - 10*hRatio;
 };
 
 Player.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y,
+        blockWidth, imgHeight);
 };
 
 Player.prototype.handleInput = function(key) {
@@ -71,15 +82,14 @@ Player.prototype.handleInput = function(key) {
         case 'up':
             this.row--;
             if (this.row == 0) {
-                this.col = 2;
-                this.row = 5;
+                this.reset();
                 hit = true;
             }
             break;
         case 'down':
             this.row++;
-            if (this.row == 6)
-                this.row = 5;
+            if (this.row == numRows)
+                this.row = numRows-1;
             break;
         case 'left':
             this.col--;
@@ -88,9 +98,12 @@ Player.prototype.handleInput = function(key) {
             break;
         case 'right':
             this.col++;
-            if (this.col == 5)
-                this.col = 4;
+            if (this.col == numCols)
+                this.col = numCols-1;
     }
+    console.log(key, this.row, this.col);
+
+    console.log(window.innerWidth, window.outerWidth);
 };
 
 // Now instantiate your objects.
@@ -102,7 +115,6 @@ allEnemies.push(new Enemy());
 allEnemies.push(new Enemy());
 var player = new Player();
 
-var hit = false;
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {

@@ -39,6 +39,11 @@ var Engine = function(global) {
 
     ctx = canvas.getContext('2d');
 
+    var rowImages = [
+                'images/water-block.png',   // Top row is water
+            ];
+
+
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
      */
@@ -52,11 +57,16 @@ var Engine = function(global) {
         var now = Date.now(),
             dt = (now - lastTime) / 1000.0;
 
+        if(debugFlag) {
+            var viewportOffset = canvas.getBoundingClientRect();
+            console.log(viewportOffset.top, viewportOffset.left, viewportOffset.width);
+        }
         /* Call our update/render functions, pass along the time delta to
          * our update function since it may be used for smooth animation.
          */
         update(dt);
         render();
+
 
         /* Set our lastTime variable which is used to determine the time delta
          * for the next time this function is called.
@@ -106,15 +116,6 @@ var Engine = function(global) {
         });
         player.update();
     }
-
-    var rowImages = [
-                'images/water-block.png',   // Top row is water
-            ],
-            numRows = numBricks + numGrass + 1;
-
-    var blockHeight = Math.floor(576/((numRows-1)+171/83))+1,
-            blockWidth = Math.floor(505/numCols),
-            imgHeight = blockHeight * 171/83;
 
     /* This function initially draws the "game level", it will then call
      * the renderEntities function. Remember, this function is called every
@@ -169,6 +170,13 @@ var Engine = function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
+        numRows = numBricks + numGrass + 1;
+        hRatio = 586/((numRows-1)*83+171);
+        blockHeight = Math.round(hRatio*83);
+        blockWidth = Math.floor(505/numCols);
+        imgHeight = hRatio*171;
+        imgWidth = hRatio*83;
+
          /* This array holds the relative URL to the image used
          * for that particular row of the game level.
          */
@@ -177,9 +185,8 @@ var Engine = function(global) {
 
         for(i=0; i<numGrass; i++)
             rowImages.push('images/grass-block.png');
-        console.log(nPlayerImage)
+        player.reset();
         player.sprite = playerImages[nPlayerImage];
-        console.log(playerImages[nPlayerImage]);
     }
 
     var resources = ['images/stone-block.png',

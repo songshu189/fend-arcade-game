@@ -1,5 +1,7 @@
 body {
     text-align: center;
+    width: 505px;
+	margin: 0 auto;
 }
 
 .setting {
@@ -31,4 +33,10 @@ th {
 
 .red-text {
 	color: red;
+}
+
+.setting-button {
+	position: relative;
+	top: 30px;
+	left: 200px;
 }

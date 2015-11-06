@@ -1,9 +1,19 @@
+
 var vMin = 100;
-var vMax = 500;
+var vMax = 360;
 var numBugs = 3;
 var numBricks = 3;
 var numGrass = 2;
 var numCols = 5;
+var numRows = numBricks + numGrass + 1;
+
+var hRatio = 586/((numRows-1)*83+171);
+var blockHeight = Math.round(hRatio*83),
+    blockWidth = Math.floor(505/numCols),
+    imgHeight = hRatio*171,
+    imgWidth = hRatio*83;
+
+var debugFlag = false;
 
 var playerImages = ['images/char-boy.png',
         'images/char-cat-girl.png',
