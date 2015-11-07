@@ -92,3 +92,17 @@ document.getElementsByName('button')[0].onclick=function(){
     document.getElementById('setting-button').className = "setting-button";
     Engine(window);
 };
+
+function setting_button() {
+    document.getElementById('setting-button').className = "hide-row";
+    document.getElementById('setting-div').className = "setting";
+    document.querySelector('canvas').className = "hide-row";
+
+    document.getElementsByName('player')[nPlayerImage].checked=true;
+    document.getElementsByName('vmin')[0].value = vMin;
+    document.getElementsByName('vmax')[0].value = vMax;
+    document.getElementsByName('nbug')[0].value = numBugs;
+    document.getElementsByName('nbricks')[0].value = numBricks;
+    document.getElementsByName('ngrass')[0].value = numGrass;
+    document.getElementsByName('ncols')[0].value = numCols;
+}

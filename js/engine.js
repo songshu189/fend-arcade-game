@@ -146,7 +146,6 @@ var Engine = function(global) {
             }
         }
 
-
         renderEntities();
     }
 
@@ -177,6 +176,7 @@ var Engine = function(global) {
         imgHeight = hRatio*171;
         imgWidth = hRatio*83;
 
+        canvas.width = blockWidth*numCols;
          /* This array holds the relative URL to the image used
          * for that particular row of the game level.
          */
@@ -186,10 +186,26 @@ var Engine = function(global) {
         for(i=0; i<numGrass; i++)
             rowImages.push('images/grass-block.png');
 
+        for(i=0; i<numBugs; i++) {
+            allEnemies.push(new Enemy());
+        }
+
+        var nbug = allEnemies.length;
+        var enemy;
+        if( nbug < numBugs) {
+            for(i=nbug; i<numBugs; i++) {
+                enemy = new Enemy();
+                allEnemies.push(enemy);
+            }
+        } else {
+            for(i=numBugs; i<nbug; i++) {
+                allEnemies.pop();
+            }
+        }
+
         allEnemies.forEach(function(enemy) {
             enemy.reset();
         });
-
 
         player.reset();
         player.sprite = playerImages[nPlayerImage];

@@ -30,7 +30,7 @@ Enemy.prototype.render = function() {
 
 Enemy.prototype.reset =  function() {
     this.x = 0;
-    this.row = (Math.floor(Math.random() * 3) + 1)
+    this.row = (Math.floor(Math.random() * numBricks) + 1)
     this.y = this.row*blockHeight;
     this.speed = Math.random() * (vMax - vMin) + vMin;
 };
@@ -108,9 +108,7 @@ Player.prototype.handleInput = function(key) {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 var allEnemies = [];
-allEnemies.push(new Enemy());
-allEnemies.push(new Enemy());
-allEnemies.push(new Enemy());
+
 var player = new Player();
 
 // This listens for key presses and sends the keys to your
