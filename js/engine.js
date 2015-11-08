@@ -221,6 +221,7 @@ var Engine = function(global) {
      * draw our game level. Then set init as the callback method, so that when
      * all of these images are properly loaded our game will start.
      */
+    Resources.clear();
     Resources.onReady(init);
     Resources.load(resources);
 

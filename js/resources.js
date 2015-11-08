@@ -15,6 +15,13 @@
      */
     function load(urlOrArr) {
         if(urlOrArr instanceof Array) {
+            /* If the array is already loaded, call all of
+             * the onReady() callbacks we have defined.
+             */
+            if(isLoaded(urlOrArr)) {
+                readyCallbacks.forEach(function(func) { func(); });
+            }
+
             /* If the developer passed in an array of images
              * loop through each value and call our image
              * loader on that image file
@@ -99,6 +106,24 @@
         readyCallbacks.push(func);
     }
 
+    /* This function clears readyCallbacks to make it fresh when restarting game
+     * after setting changed. (only one init function)
+     */
+    function clearCallbacks() {
+        readyCallbacks = [];
+    }
+
+    /* This function determines if resources have been loaded before
+     */
+    function isLoaded(urlOrArr) {
+        for(var i=0; i<urlOrArr.length; i++) {
+            if(!resourceCache[urlOrArr[i]]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /* This object defines the publicly accessible functions available to
      * developers by creating a global Resources object.
      */
@@ -106,6 +131,7 @@
         load: load,
         get: get,
         onReady: onReady,
-        isReady: isReady
+        isReady: isReady,
+        clear: clearCallbacks
     };
 })();
