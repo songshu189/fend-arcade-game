@@ -40,11 +40,6 @@ Enemy.prototype.reset =  function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 
-function player_reset() {
-    this.col = Math.floor(numCols/2);
-    this.row = numRows-1;
-}
-
 var hit = false;
 
 var Player = function() {
@@ -61,13 +56,6 @@ Player.prototype.update = function() {
     if (hit) {
         this.reset();
         hit = false;
-    }
-    for(var i = 0; i<allEnemies.length; i++) {
-        var enemy = allEnemies[i];
-        if (enemy.row == this.row && (this.x + 101) > (enemy.x+18) && (enemy.x + 81) > this.x) {
-            hit = true;
-            break;
-        }
     }
     this.x = this.col*blockWidth;
     this.y = this.row*blockHeight - 10*hRatio;
@@ -110,6 +98,17 @@ Player.prototype.handleInput = function(key) {
 var allEnemies = [];
 
 var player = new Player();
+
+var checkCollisions = function() {
+    for(var i = 0; i<allEnemies.length; i++) {
+        var enemy = allEnemies[i];
+        if (enemy.row == player.row && (player.x + 101) > (enemy.x+18) && (enemy.x + 81) > player.x) {
+            hit = true;
+            break;
+        }
+    }
+}
+
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.

@@ -68,7 +68,6 @@ var Engine = function(global) {
         lastTime = now;
 
         if(cancelAnimation) {
-           console.log(request);
            cancelAnimationFrame(request);
         }
         /* Use the browser's requestAnimationFrame function to call this
@@ -99,7 +98,7 @@ var Engine = function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        checkCollisions();
     }
 
     /* This is called by the update function  and loops through all of the
