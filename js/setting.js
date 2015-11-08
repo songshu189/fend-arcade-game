@@ -1,6 +1,6 @@
 
-var vMin = 100;
-var vMax = 360;
+var vMin = 80;
+var vMax = 300;
 var numBugs = 3;
 var numBricks = 3;
 var numGrass = 2;
@@ -12,8 +12,6 @@ var blockHeight = Math.round(hRatio*83),
     blockWidth = Math.floor(505/numCols),
     imgHeight = hRatio*171,
     imgWidth = hRatio*83;
-
-var debugFlag = false;
 
 var playerImages = ['images/char-boy.png',
         'images/char-cat-girl.png',
@@ -28,6 +26,8 @@ var playerImageIdx = {
     'char-horn-girl.png':2,
     'char-pink-girl.png':3,
     'char-princess-girl.png':4};
+var cancelAnimation = false;
+var request;
 
 document.getElementById('select-player').addEventListener("click", function(e) {
     var target = e.target;
@@ -88,12 +88,15 @@ document.querySelector('table').addEventListener('change', function(e){
 });
 
 document.getElementsByName('button')[0].onclick=function(){
+    cancelAnimation = false;
     document.getElementById('setting-div').className = "hide-row";
     document.getElementById('setting-button').className = "setting-button";
     Engine(window);
 };
 
 function setting_button() {
+    cancelAnimation = true;
+    cancelAnimationFrame(request);
     document.getElementById('setting-button').className = "hide-row";
     document.getElementById('setting-div').className = "setting";
     document.querySelector('canvas').className = "hide-row";

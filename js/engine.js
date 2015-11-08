@@ -43,7 +43,6 @@ var Engine = function(global) {
                 'images/water-block.png',   // Top row is water
             ];
 
-
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
      */
@@ -57,26 +56,25 @@ var Engine = function(global) {
         var now = Date.now(),
             dt = (now - lastTime) / 1000.0;
 
-        if(debugFlag) {
-            var viewportOffset = canvas.getBoundingClientRect();
-            console.log(viewportOffset.top, viewportOffset.left, viewportOffset.width);
-        }
         /* Call our update/render functions, pass along the time delta to
          * our update function since it may be used for smooth animation.
          */
         update(dt);
         render();
 
-
         /* Set our lastTime variable which is used to determine the time delta
          * for the next time this function is called.
          */
         lastTime = now;
 
+        if(cancelAnimation) {
+           console.log(request);
+           cancelAnimationFrame(request);
+        }
         /* Use the browser's requestAnimationFrame function to call this
          * function again as soon as the browser is able to draw another frame.
          */
-        win.requestAnimationFrame(main);
+        request = win.requestAnimationFrame(main);
     }
 
     /* This function does some initial setup that should only occur once,
@@ -86,7 +84,8 @@ var Engine = function(global) {
     function init() {
         reset();
         lastTime = Date.now();
-        main();
+        request = win.requestAnimationFrame(main);
+        //main();
     }
 
     /* This function is called by main (our game loop) and itself calls all
@@ -170,6 +169,7 @@ var Engine = function(global) {
      */
     function reset() {
         numRows = numBricks + numGrass + 1;
+        console.log(numCols, numBricks, numGrass);
         hRatio = 586/((numRows-1)*83+171);
         blockHeight = Math.round(hRatio*83);
         blockWidth = Math.floor(505/numCols);
@@ -221,8 +221,8 @@ var Engine = function(global) {
      * draw our game level. Then set init as the callback method, so that when
      * all of these images are properly loaded our game will start.
      */
-    Resources.load(resources);
     Resources.onReady(init);
+    Resources.load(resources);
 
     /* Assign the canvas' context object to the global variable (the window
      * object when run in a browser) so that developer's can use it more easily
