@@ -45,7 +45,7 @@ Enemy.prototype.reset =  function() {
 var hit = false;
 
 var Player = function() {
-    this.sprite = playerImages[nPlayerImage];
+    this.sprite = playerImageSrc;
 };
 
 // Reset the player at the last row, middle column

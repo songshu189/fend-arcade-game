@@ -14,19 +14,8 @@ var blockHeight = Math.round(hRatio*83),
     imgWidth = hRatio*83;
 var wRatio = blockWidth/101;
 var canvasWidth = 505;
-var playerImages = ['images/char-boy.png',
-        'images/char-cat-girl.png',
-        'images/char-horn-girl.png',
-        'images/char-pink-girl.png',
-        'images/char-princess-girl.png'];
 
-var nPlayerImage = 0;
-var playerImageIdx = {
-    'char-boy.png':0,
-    'char-cat-girl.png':1,
-    'char-horn-girl.png':2,
-    'char-pink-girl.png':3,
-    'char-princess-girl.png':4};
+var playerImageSrc = 'images/char-boy.png';
 var cancelAnimation = false;
 var request;
 
@@ -35,17 +24,23 @@ document.getElementById('select-player').addEventListener("click", function(e) {
     if(!target) return;
     if(target.nodeName == 'IMG') {
         var path = target.src;
-        var pos = path.lastIndexOf('/') + 1;
-        var file = path.substr(pos, path.length-pos);
-        nPlayerImage = playerImageIdx[file];
 
-        document.getElementsByName('player')[nPlayerImage].checked=true;
+        var index = path.lastIndexOf('images');
+        playerImageSrc = path.substr(index, path.length - index + 1);
+
+        var input = target.parentNode.parentNode.getElementsByTagName('input')[0];
+        input.checked = true;
+
         target.style.cursor = 'auto';
 
         setTimeout(function(){ e.target.style.cursor = 'pointer'; }, 1000);
     }
     else if(target.nodeName == 'INPUT') {
-        nPlayerImage = parseInt(target.value);
+
+        var img = target.parentNode.parentNode.getElementsByTagName('img')[0];
+        var path = img.src;
+        var index = path.lastIndexOf('images');
+        playerImageSrc = path.substr(index, path.length - index + 1);
     }
 });
 
@@ -102,7 +97,6 @@ function setting_button() {
     document.getElementById('setting-div').className = "setting";
     document.querySelector('canvas').className = "hide-row";
 
-    document.getElementsByName('player')[nPlayerImage].checked=true;
     document.getElementsByName('vmin')[0].value = vMin;
     document.getElementsByName('vmax')[0].value = vMax;
     document.getElementsByName('nbug')[0].value = numBugs;

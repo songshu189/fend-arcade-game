@@ -204,14 +204,14 @@ var Engine = function(global) {
         });
 
         player.reset();
-        player.sprite = playerImages[nPlayerImage];
+        player.sprite = playerImageSrc;
     }
 
     var resources = ['images/stone-block.png',
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png'];
-    resources.push(playerImages[nPlayerImage]);
+    resources.push(playerImageSrc);
 
     /* Go ahead and load all of the images we know we're going to need to
      * draw our game level. Then set init as the callback method, so that when
