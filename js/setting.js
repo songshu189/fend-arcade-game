@@ -12,7 +12,8 @@ var blockHeight = Math.round(hRatio*83),
     blockWidth = Math.floor(505/numCols),
     imgHeight = hRatio*171,
     imgWidth = hRatio*83;
-
+var wRatio = blockWidth/101;
+var canvasWidth = 505;
 var playerImages = ['images/char-boy.png',
         'images/char-cat-girl.png',
         'images/char-horn-girl.png',
@@ -37,7 +38,7 @@ document.getElementById('select-player').addEventListener("click", function(e) {
         var pos = path.lastIndexOf('/') + 1;
         var file = path.substr(pos, path.length-pos);
         nPlayerImage = playerImageIdx[file];
-        console.log(nPlayerImage);
+
         document.getElementsByName('player')[nPlayerImage].checked=true;
         target.style.cursor = 'auto';
 

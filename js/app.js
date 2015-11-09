@@ -17,7 +17,7 @@ Enemy.prototype.update = function(dt) {
     // all computers.
 
     this.x += this.speed*dt;
-    if (this.x > 505) this.reset();
+    if (this.x > canvasWidth) this.reset();
 
 };
 
@@ -102,13 +102,12 @@ var player = new Player();
 var checkCollisions = function() {
     for(var i = 0; i<allEnemies.length; i++) {
         var enemy = allEnemies[i];
-        if (enemy.row == player.row && (player.x + 101) > (enemy.x+18) && (enemy.x + 81) > player.x) {
+        if (enemy.row == player.row && (player.x + 84*wRatio) > (enemy.x+18*hRatio) && (enemy.x + 81*hRatio) > (player.x + 18*wRatio)) {
             hit = true;
             break;
         }
     }
 }
-
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.

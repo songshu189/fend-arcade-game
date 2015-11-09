@@ -168,14 +168,16 @@ var Engine = function(global) {
      */
     function reset() {
         numRows = numBricks + numGrass + 1;
-        console.log(numCols, numBricks, numGrass);
         hRatio = 586/((numRows-1)*83+171);
         blockHeight = Math.round(hRatio*83);
         blockWidth = Math.floor(505/numCols);
         imgHeight = hRatio*171;
         imgWidth = hRatio*83;
 
-        canvas.width = blockWidth*numCols;
+        wRatio = blockWidth/101;
+
+        canvasWidth = blockWidth*numCols;
+        canvas.width = canvasWidth;
          /* This array holds the relative URL to the image used
          * for that particular row of the game level.
          */
