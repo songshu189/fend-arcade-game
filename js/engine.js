@@ -84,7 +84,6 @@ var Engine = function(global) {
         reset();
         lastTime = Date.now();
         request = win.requestAnimationFrame(main);
-        //main();
     }
 
     /* This function is called by main (our game loop) and itself calls all
@@ -162,9 +161,9 @@ var Engine = function(global) {
         player.render();
     }
 
-    /* This function does nothing but it could have been a good place to
-     * handle game reset states - maybe a new game menu or a game over screen
-     * those sorts of things. It's only called once by the init() method.
+    /* This function resets the game according to the setting paramters,
+     * it sets the images of each row (rowImages), the enemy array allEnemies,
+     * resets each Enemy and Player.
      */
     function reset() {
         numRows = numBricks + numGrass + 1;
@@ -186,10 +185,6 @@ var Engine = function(global) {
 
         for(i=0; i<numGrass; i++)
             rowImages.push('images/grass-block.png');
-
-        for(i=0; i<numBugs; i++) {
-            allEnemies.push(new Enemy());
-        }
 
         var nbug = allEnemies.length;
         var enemy;
@@ -221,6 +216,7 @@ var Engine = function(global) {
     /* Go ahead and load all of the images we know we're going to need to
      * draw our game level. Then set init as the callback method, so that when
      * all of these images are properly loaded our game will start.
+     * Add a line call Resources.clear, to clear callback function in Resources.
      */
     Resources.clear();
     Resources.onReady(init);

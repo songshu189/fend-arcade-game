@@ -28,6 +28,7 @@ Enemy.prototype.render = function() {
             imgWidth, imgHeight);
 };
 
+// Reset the enemy, randomly generate row and speed
 Enemy.prototype.reset =  function() {
     this.x = 0;
     this.row = (Math.floor(Math.random() * numBricks) + 1)
@@ -40,12 +41,14 @@ Enemy.prototype.reset =  function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 
+// when player collides with enemy, set the hit flag as true.\
 var hit = false;
 
 var Player = function() {
     this.sprite = playerImages[nPlayerImage];
 };
 
+// Reset the player at the last row, middle column
 Player.prototype.reset = function () {
     this.col = Math.floor(numCols/2);
     this.row = numRows-1;
@@ -72,7 +75,7 @@ Player.prototype.handleInput = function(key) {
             this.row--;
             if (this.row == 0) {
                 this.reset();
-                hit = true;
+                //hit = true;
             }
             break;
         case 'down':
@@ -99,10 +102,15 @@ var allEnemies = [];
 
 var player = new Player();
 
+
+// Check if player collides with enemy, only check those enemies at the same row with the player
+// player's left, right is [18, 84], enemy's left, right is [18, 81], with respect to
+// respective left position
 var checkCollisions = function() {
     for(var i = 0; i<allEnemies.length; i++) {
         var enemy = allEnemies[i];
-        if (enemy.row == player.row && (player.x + 84*wRatio) > (enemy.x+18*hRatio) && (enemy.x + 81*hRatio) > (player.x + 18*wRatio)) {
+        if (enemy.row == player.row && (player.x + 84*wRatio) > (enemy.x+18*hRatio) &&
+            (enemy.x + 81*hRatio) > (player.x + 18*wRatio)) {
             hit = true;
             break;
         }
