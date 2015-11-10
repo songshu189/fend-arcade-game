@@ -1,4 +1,9 @@
-
+// Setting parameters
+// vMin: minimum speed of enemy, (pixel/second)
+// vMax: maximum speed of enemy, (pixel/second)
+// numBugs: number of bugs of the game, randomly appear at paved block
+// numBricks: number of rows of paved blocks
+// numCols: number of columns of the scene
 var vMin = 80;
 var vMax = 300;
 var numBugs = 3;
@@ -7,6 +12,12 @@ var numGrass = 2;
 var numCols = 5;
 var numRows = numBricks + numGrass + 1;
 
+// hRatio: height ratio of when number of rows changed, used for bug height, width,
+//         and player height
+// blockHeight: Height of each block
+// blockWidth: Width of each block
+// imgHeight, imgWidth: Height and Width of image when defaul parameters changed
+// wRatio: width ratio, only used for player width
 var hRatio = 586/((numRows-1)*83+171);
 var blockHeight = Math.round(hRatio*83),
     blockWidth = Math.floor(505/numCols),
@@ -19,6 +30,8 @@ var playerImageSrc = 'images/char-boy.png';
 var cancelAnimation = false;
 var request;
 
+// This event listener is used for select player image, the player image
+// source file name is saved as playImageSrc
 document.getElementById('select-player').addEventListener("click", function(e) {
     var target = e.target;
     if(!target) return;
@@ -37,6 +50,8 @@ document.getElementById('select-player').addEventListener("click", function(e) {
     }
 });
 
+
+// This event listen works for change setting parameters
 document.querySelector('table').addEventListener('change', function(e){
     var target = e.target;
 
@@ -76,6 +91,7 @@ document.querySelector('table').addEventListener('change', function(e){
     }
 });
 
+// This event listener hides setting page, shows setting button on game page
 document.getElementsByName('button')[0].onclick=function(){
     cancelAnimation = false;
     document.getElementById('setting-div').className = "hide-row";
@@ -83,17 +99,12 @@ document.getElementsByName('button')[0].onclick=function(){
     Engine(window);
 };
 
+// This event listener hides canvas (game scene) and setting button, shows
+// setting page.
 function setting_button() {
     cancelAnimation = true;
     cancelAnimationFrame(request);
     document.getElementById('setting-button').className = "hide-row";
     document.getElementById('setting-div').className = "setting";
     document.querySelector('canvas').className = "hide-row";
-
-    document.getElementsByName('vmin')[0].value = vMin;
-    document.getElementsByName('vmax')[0].value = vMax;
-    document.getElementsByName('nbug')[0].value = numBugs;
-    document.getElementsByName('nbricks')[0].value = numBricks;
-    document.getElementsByName('ngrass')[0].value = numGrass;
-    document.getElementsByName('ncols')[0].value = numCols;
 }
