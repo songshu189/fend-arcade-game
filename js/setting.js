@@ -23,10 +23,7 @@ document.getElementById('select-player').addEventListener("click", function(e) {
     var target = e.target;
     if(!target) return;
     if(target.nodeName == 'IMG') {
-        var path = target.src;
-
-        var index = path.lastIndexOf('images');
-        playerImageSrc = path.substr(index, path.length - index + 1);
+        playerImageSrc = target.src;
 
         var input = target.parentNode.parentNode.getElementsByTagName('input')[0];
         input.checked = true;
@@ -36,11 +33,7 @@ document.getElementById('select-player').addEventListener("click", function(e) {
         setTimeout(function(){ e.target.style.cursor = 'pointer'; }, 1000);
     }
     else if(target.nodeName == 'INPUT') {
-
-        var img = target.parentNode.parentNode.getElementsByTagName('img')[0];
-        var path = img.src;
-        var index = path.lastIndexOf('images');
-        playerImageSrc = path.substr(index, path.length - index + 1);
+        playerImageSrc = target.parentNode.parentNode.getElementsByTagName('img')[0].src
     }
 });
 
