@@ -43,6 +43,7 @@ Enemy.prototype.reset =  function() {
 
 // when player collides with enemy, set the hit flag as true.\
 var hit = false;
+var paused = false;
 
 var Player = function() {
     this.sprite = playerImageSrc;
@@ -71,11 +72,21 @@ Player.prototype.render = function() {
 
 Player.prototype.handleInput = function(key) {
     switch(key) {
+        case 'space':
+            paused = false;
+            this.reset();
+            break;
         case 'up':
             this.row--;
-            if (this.row == 0) {
-                this.reset();
-                //hit = true;
+            if (!paused && this.row == 0) {
+                ctx.font = "36px sans-serif";
+                ctx.textAlign = "center";
+                ctx.fillStyle = "red";
+                ctx.fillText('You win!', 257, this.y+20);
+                ctx.font = "16px sans-serif"
+                ctx.fillText('Press space to continue', 252, this.y+40);
+                this.row = 1;
+                paused = true;
             }
             break;
         case 'down':
@@ -121,6 +132,7 @@ var checkCollisions = function() {
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
+        32: 'space',
         37: 'left',
         38: 'up',
         39: 'right',

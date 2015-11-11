@@ -59,9 +59,10 @@ var Engine = function(global) {
         /* Call our update/render functions, pass along the time delta to
          * our update function since it may be used for smooth animation.
          */
-        update(dt);
-        render();
-
+        if(!paused) {
+            update(dt);
+            render();
+        }
         /* Set our lastTime variable which is used to determine the time delta
          * for the next time this function is called.
          */
@@ -169,7 +170,7 @@ var Engine = function(global) {
         numRows = numBricks + numGrass + 1;
         hRatio = 586/((numRows-1)*83+171);
         blockHeight = Math.round(hRatio*83);
-        blockWidth = Math.floor(505/numCols);
+        blockWidth = Math.floor(canvasWidth/numCols);
         imgHeight = hRatio*171;
         imgWidth = hRatio*83;
 
