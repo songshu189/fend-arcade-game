@@ -29,14 +29,21 @@ var Engine = function(global) {
 
     if(!canvas) {
         canvas= doc.createElement('canvas')
-        canvas.width = 505;
-        canvas.height = 606;
         doc.body.appendChild(canvas);
     }
     else {
         canvas.className = '';
     }
-
+    if(numCols<=10) {
+        canvasWidth = 505;
+        doc.body.style.width = '505px';
+    }
+    else {
+        canvasWidth = 808;
+        doc.body.style.width = '808px'
+    }
+    canvas.width = canvasWidth;
+    canvas.height = 606;
     ctx = canvas.getContext('2d');
 
     var rowImages = [
@@ -59,10 +66,11 @@ var Engine = function(global) {
         /* Call our update/render functions, pass along the time delta to
          * our update function since it may be used for smooth animation.
          */
-        if(!paused) {
+        if(!won) {
             update(dt);
-            render();
         }
+        render();
+
         /* Set our lastTime variable which is used to determine the time delta
          * for the next time this function is called.
          */

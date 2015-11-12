@@ -43,7 +43,7 @@ Enemy.prototype.reset =  function() {
 
 // when player collides with enemy, set the hit flag as true.\
 var hit = false;
-var paused = false;
+var won = false;
 
 var Player = function() {
     this.sprite = playerImageSrc;
@@ -68,25 +68,27 @@ Player.prototype.update = function() {
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y,
         blockWidth, imgHeight);
+    if(won) {
+        ctx.font = "36px sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillStyle = "red";
+        ctx.fillText('You win!', canvasWidth/2, this.y+20);
+        ctx.font = "16px sans-serif"
+        ctx.fillText('Press space to continue', canvasWidth/2, this.y+40);
+    }
 };
 
 Player.prototype.handleInput = function(key) {
     switch(key) {
         case 'space':
-            paused = false;
+            won = false;
             this.reset();
             break;
         case 'up':
             this.row--;
-            if (!paused && this.row == 0) {
-                ctx.font = "36px sans-serif";
-                ctx.textAlign = "center";
-                ctx.fillStyle = "red";
-                ctx.fillText('You win!', 257, this.y+20);
-                ctx.font = "16px sans-serif"
-                ctx.fillText('Press space to continue', 252, this.y+40);
+            if (!won && this.row == 0) {
                 this.row = 1;
-                paused = true;
+                won = true;
             }
             break;
         case 'down':
