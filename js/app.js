@@ -31,7 +31,7 @@ Enemy.prototype.render = function() {
 // Reset the enemy, randomly generate row and speed
 Enemy.prototype.reset =  function() {
     this.x = 0;
-    this.row = (Math.floor(Math.random() * numBricks) + 1)
+    this.row = (Math.floor(Math.random() * numBricks) + 1);
     this.y = this.row*blockHeight;
     this.speed = Math.random() * (vMax - vMin) + vMin;
 };
@@ -55,7 +55,7 @@ var Player = function() {
 Player.prototype.reset = function () {
     this.col = Math.floor(numCols/2);
     this.row = numRows-1;
-}
+};
 
 
 Player.prototype.update = function() {
@@ -75,7 +75,7 @@ Player.prototype.render = function() {
         ctx.textAlign = "center";
         ctx.fillStyle = "red";
         ctx.fillText('You win!', canvasWidth/2, this.y+20);
-        ctx.font = "16px sans-serif"
+        ctx.font = "16px sans-serif";
         ctx.fillText('Press space to continue', canvasWidth/2, this.y+40);
     }
 };
@@ -88,7 +88,7 @@ Player.prototype.handleInput = function(key) {
             break;
         case 'up':
             this.row--;
-            if (!won && this.row == 0) {
+            if (!won && this.row === 0) {
                 this.row = 1;
                 won = true;
             }
@@ -116,21 +116,6 @@ Player.prototype.handleInput = function(key) {
 var allEnemies = [];
 
 var player = new Player();
-
-
-// Check if player collides with enemy, only check those enemies at the same row with the player
-// player's left, right is [18, 84], enemy's left, right is [18, 81], with respect to
-// respective left position
-var checkCollisions = function() {
-    for(var i = 0; i<allEnemies.length; i++) {
-        var enemy = allEnemies[i];
-        if (enemy.row == player.row && (player.x + 84*wRatio) > (enemy.x+18*hRatio) &&
-            (enemy.x + 81*hRatio) > (player.x + 18*wRatio)) {
-            hit = true;
-            break;
-        }
-    }
-}
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.

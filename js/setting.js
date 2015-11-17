@@ -46,7 +46,7 @@ document.getElementById('select-player').addEventListener("click", function(e) {
         setTimeout(function(){ e.target.style.cursor = 'pointer'; }, 1000);
     }
     else if(target.nodeName == 'INPUT') {
-        playerImageSrc = target.parentNode.parentNode.getElementsByTagName('img')[0].src
+        playerImageSrc = target.parentNode.parentNode.getElementsByTagName('img')[0].src;
     }
 });
 
@@ -101,7 +101,7 @@ document.getElementsByName('button')[0].onclick=function(){
 
 // This event listener hides canvas (game scene) and setting button, shows
 // setting page.
-function setting_button() {
+function settingButton() {
     cancelAnimation = true;
     cancelAnimationFrame(request);
     document.getElementById('setting-button').className = "hide-row";

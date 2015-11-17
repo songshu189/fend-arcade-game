@@ -28,7 +28,7 @@ var Engine = function(global) {
     canvas = document.querySelector('canvas');
 
     if(!canvas) {
-        canvas= doc.createElement('canvas')
+        canvas= doc.createElement('canvas');
         doc.body.appendChild(canvas);
     }
     else {
@@ -40,7 +40,7 @@ var Engine = function(global) {
     }
     else {
         canvasWidth = 808;
-        doc.body.style.width = '808px'
+        doc.body.style.width = '808px';
     }
     canvas.width = canvasWidth;
     canvas.height = 606;
@@ -180,7 +180,8 @@ var Engine = function(global) {
         blockHeight = Math.round(hRatio*83);
         blockWidth = Math.floor(canvasWidth/numCols);
         imgHeight = hRatio*171;
-        imgWidth = hRatio*83;
+        imgWidth = hRatio*101;
+        console.log(imgWidth, imgHeight);
 
         wRatio = blockWidth/101;
 
@@ -214,6 +215,20 @@ var Engine = function(global) {
 
         player.reset();
         player.sprite = playerImageSrc;
+    }
+
+    // Check if player collides with enemy, only check those enemies at the same row with the player
+    // player's left, right is [18, 84], enemy's left, right is [18, 81], with respect to
+    // respective left position
+    function checkCollisions() {
+        for(var i = 0; i<allEnemies.length; i++) {
+            var enemy = allEnemies[i];
+            if (enemy.row == player.row && (player.x + 84*wRatio) > (enemy.x+18*hRatio) &&
+                (enemy.x + 81*hRatio) > (player.x + 18*wRatio)) {
+                hit = true;
+                break;
+            }
+        }
     }
 
     var resources = ['images/stone-block.png',
