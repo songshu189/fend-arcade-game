@@ -41,7 +41,9 @@ Enemy.prototype.reset =  function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 
-// when player collides with enemy, set the hit flag as true.\
+// when player collides with enemy, set the hit flag as true.
+// when player reaches to the water, set the won flag as true.
+
 var hit = false;
 var won = false;
 
